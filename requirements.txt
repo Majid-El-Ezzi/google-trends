@@ -3,3 +3,6 @@ pydantic
 psycopg2-binary
 pandas
 matplotlib
+SQLAlchemy
+requests
+urllib3==2.4.0
