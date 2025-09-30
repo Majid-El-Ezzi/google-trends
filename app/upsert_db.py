@@ -14,8 +14,8 @@ def upsert_trends(records, batch_size=50):
                     keyword=record.keyword,
                     geo=record.geo,
                     interest=record.interest
-                ).on_conflict_do_update(# CHeck for conflict based on unique constraint
-                    index_elements=['date', 'keyword', 'geo'],
+                ).on_conflict_do_update( # CHeck for conflict based on unique constraint
+                    index_elements=['date', 'keyword', 'geo'], # columns that define uniqueness
                     set_=dict(interest=record.interest)# update interest if conflict occurs
                 )
                 session.execute(query) #execute the above statement.
