@@ -10,8 +10,15 @@ COPY requirements.txt .
 # 4. Install Python dependencies inside the container
 RUN pip install --no-cache-dir -r requirements.txt
 
+# install netcat
+RUN apt-get update && apt-get install -y netcat-traditional && rm -rf /var/lib/apt/lists/*
+
+
 # 5. Copy the rest of the app’s code
 COPY . .
 
-# 6. Define the command to run your app
-CMD ["python", "app/main.py"]
+# 6. make script executable
+RUN chmod +x wait-for-db.sh
+
+# 7. Command to run the application
+CMD ["./wait-for-db.sh"]     
