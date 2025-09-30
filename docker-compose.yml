@@ -13,7 +13,6 @@ services:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
-
   app:
     build: .
     container_name: trends-app
@@ -21,9 +20,12 @@ services:
       - db
     environment:
       DATABASE_URL: postgresql+psycopg2://majid:majid@db:5432/trends
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: majid
     volumes:
       - .:/app
-    command: python app/main.py
+    command: ["./wait-for-db.sh"]
 
 volumes:
   db_data:
