@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: trends-db
+    restart: always
+    environment:
+      POSTGRES_USER: majid
+      POSTGRES_PASSWORD: majid
+      POSTGRES_DB: trends
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: trends-app
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql+psycopg2://majid:majid@db:5432/trends
+    volumes:
+      - .:/app
+    command: python app/main.py
+
+volumes:
+  db_data:
